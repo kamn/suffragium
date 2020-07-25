@@ -61,9 +61,8 @@ const getSummarizedDefault = (election: FirstPastThePostElection) => {
   }, {});
 };
 
-const getWinners = (results: any): Array<string> => {
+const getWinners = (results: Record<string, number>): Array<string> => {
   const sorted = Object.entries(results).sort((a, b) => {
-    // @ts-ignore
     return b[1] - a[1];
   });
 

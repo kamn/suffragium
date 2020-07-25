@@ -1,3 +1,3 @@
-export const dedup = (xs: Array<any>): Array<any> => {
+export const dedup = <T>(xs: Array<T>): Array<T> => {
   return [...new Set(xs)];
 };

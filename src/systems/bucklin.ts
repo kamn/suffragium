@@ -62,9 +62,8 @@ const getSummarizedDefault = (election: BucklinElection) => {
   }, {});
 };
 
-const getMajority = (results: any, totalBallots: number) => {
+const getMajority = (results: Record<string, number>, totalBallots: number) => {
   const sorted = Object.entries(results).sort((a, b) => {
-    // @ts-ignore
     return b[1] - a[1];
   });
   const topSorted = sorted[0];
@@ -76,7 +75,7 @@ const getMajority = (results: any, totalBallots: number) => {
   return undefined;
 };
 
-const hasMajority = (results: any, totalBallots: number) => {
+const hasMajority = (results: Record<string, number>, totalBallots: number) => {
   const majorityWinner = getMajority(results, totalBallots);
   return majorityWinner ? true : false;
 };
@@ -85,7 +84,7 @@ const noMoreRounds = (election: BucklinElection, round: number) => {
   return round >= election.definition.options.length;
 };
 
-const getIndexOrDefault = (xs: Array<any>, i: number, otherwise: any) => {
+const getIndexOrDefault = <T>(xs: Array<T>, i: number, otherwise: T) => {
   if (i < xs.length) {
     return xs[i];
   } else {
@@ -97,7 +96,7 @@ const getElectionResultsRecur = (
   election: BucklinElection,
   round: number,
   totalBallots: number,
-  results: any
+  results: Record<string, number>
 ): ElectionResult => {
   if (noMoreRounds(election, round)) {
     return {

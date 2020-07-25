@@ -62,75 +62,49 @@ const getSummarizedDefault = (election: CopelandElection) => {
   }, {});
 };
 
-const getMajority = (results: any, totalBallots: number) => {
-  const sorted = Object.entries(results).sort((a, b) => {
-    // @ts-ignore
-    return b[1] - a[1];
-  });
-  const topSorted = sorted[0];
-  const selection = topSorted[0];
-  const topCountedVotes = topSorted[1];
-  if (totalBallots / 2 < topCountedVotes) {
-    return selection;
-  }
-  return undefined;
-};
-
-const hasMajority = (results: any, totalBallots: number) => {
-  const majorityWinner = getMajority(results, totalBallots);
-  return majorityWinner ? true : false;
-};
-
-const noMoreRounds = (election: CopelandElection, round: number) => {
-  return round >= election.definition.options.length;
-};
-
-const getIndexOrDefault = (xs: Array<any>, i: number, otherwise: any) => {
-  if (i < xs.length) {
-    return xs[i];
-  } else {
-    return otherwise;
-  }
-};
-
-export const getAllOptionPairs = (options: Array<string>): Array<[string, string]> => {
-    const pairs = [];
-    for(let i = 0; i < options.length; i++) {
-        for(let y = i+1; y < options.length; y++) {
-            const firstOption = options[i];
-            const secondOption = options[y];
-            pairs.push([firstOption, secondOption])
-        }
+export const getAllOptionPairs = (
+  options: Array<string>
+): Array<[string, string]> => {
+  const pairs = [];
+  for (let i = 0; i < options.length; i++) {
+    for (let y = i + 1; y < options.length; y++) {
+      const firstOption = options[i];
+      const secondOption = options[y];
+      pairs.push([firstOption, secondOption]);
     }
-    return pairs
-}
+  }
+  return pairs;
+};
 
-const comparePair = (election: CopelandElection, pair: [string, string]) : string => {
+const comparePair = (
+  election: CopelandElection,
+  pair: [string, string]
+): string => {
   let emptyComparision = {};
   emptyComparision[pair[0]] = 0;
   emptyComparision[pair[1]] = 0;
   emptyComparision = election.ballots.reduce((r, x) => {
-      const firstPairIndex = x.selection.indexOf(pair[0])
-      const secondPairIndex = x.selection.indexOf(pair[1])
-      if(firstPairIndex < secondPairIndex && firstPairIndex!== -1) {
-        r[pair[0]] = r[pair[0]] + 1
-      } else if(firstPairIndex > secondPairIndex && secondPairIndex !== -1){
-        r[pair[1]] = r[pair[1]] + 1
-      }
-      return r
-  }, emptyComparision)
-  if(emptyComparision[pair[0]] > emptyComparision[pair[1]]) {
-      return pair[0];
-  } else if(emptyComparision[pair[0]] < emptyComparision[pair[1]]) {
-      return pair[1];
+    const firstPairIndex = x.selection.indexOf(pair[0]);
+    const secondPairIndex = x.selection.indexOf(pair[1]);
+    if (firstPairIndex < secondPairIndex && firstPairIndex !== -1) {
+      r[pair[0]] = r[pair[0]] + 1;
+    } else if (firstPairIndex > secondPairIndex && secondPairIndex !== -1) {
+      r[pair[1]] = r[pair[1]] + 1;
+    }
+    return r;
+  }, emptyComparision);
+  if (emptyComparision[pair[0]] > emptyComparision[pair[1]]) {
+    return pair[0];
+  } else if (emptyComparision[pair[0]] < emptyComparision[pair[1]]) {
+    return pair[1];
   } else {
-      // TODO: What to do in case of a tie?
-      return '';
+    // TODO: What to do in case of a tie?
+    return "";
   }
-}
-const getWinners = (results: any): Array<string> => {
+};
+
+const getWinners = (results: Record<string, number>): Array<string> => {
   const sorted = Object.entries(results).sort((a, b) => {
-    // @ts-ignore
     return b[1] - a[1];
   });
 
@@ -154,20 +128,19 @@ export const getElectionResults = (
 ): ElectionResult => {
   const beginningResults = getSummarizedDefault(election);
   const allPairs = getAllOptionPairs(election.definition.options);
-  const result = allPairs.reduce((r,x) => {
-    const firstPairVal = x[0]
-    const secondPairVal = x[1]
+  const result = allPairs.reduce((r, x) => {
+    const firstPairVal = x[0];
+    const secondPairVal = x[1];
     const compResult = comparePair(election, x);
-    if(compResult === firstPairVal) {
-        r[firstPairVal] = r[firstPairVal] + 1;
-    } else if(compResult === secondPairVal) {
-        r[secondPairVal] = r[secondPairVal] + 1;
+    if (compResult === firstPairVal) {
+      r[firstPairVal] = r[firstPairVal] + 1;
+    } else if (compResult === secondPairVal) {
+      r[secondPairVal] = r[secondPairVal] + 1;
     } else {
-        // TODO: What about this case?
+      // TODO: What about this case?
     }
-    return r
+    return r;
   }, beginningResults);
-
 
   const winners = getWinners(result);
   if (winners.length === 1) {
