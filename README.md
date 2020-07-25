@@ -7,6 +7,7 @@ Supports the following vote counting systems
 * First Past The Post
 * Sortition
 * Bucklin
+* Copeland
 
 ## Examples
 
@@ -36,3 +37,4 @@ THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH RE
 
 ## Other Libraries
 https://github.com/anarchodin/caritat
+https://github.com/julien-boudry/Condorcet
