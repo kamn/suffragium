@@ -1,6 +1,6 @@
 {
   "name": "suffragium",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Playing around with Voting Systems",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -20,5 +20,11 @@
   "dependencies": {
     "random-js": "^2.1.0",
     "typescript": "^3.9.7"
+  },
+  "standard-version": {
+    "skip": {
+      "commit": true,
+      "tag": true
+    }
   }
 }
