@@ -1,10 +1,12 @@
 import { repeatBallot } from "./helpers";
-import {
+import { bucklin } from "../index";
+
+const {
   createDefinition,
   startElection,
   castBallot,
   getElectionResults,
-} from "../systems/bucklin";
+} = bucklin
 
 test("Bucklin - Definition", () => {
   const definition = createDefinition(["a", "a", "b", "b", "c"]);

@@ -1,10 +1,11 @@
 import { repeatBallot } from "./helpers";
-import {
+import { irv } from "../index";
+const {
   createDefinition,
   startElection,
   castBallot,
   getElectionResults,
-} from "../systems/irv";
+} = irv
 
 test("IRV - Definition", () => {
   const definition = createDefinition(["a", "a", "b", "b", "c"]);

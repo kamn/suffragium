@@ -1,9 +1,9 @@
-import {
+import { sortition } from "../index";
+const {
   createBasicDefinition,
   startElection,
   getElectionResults,
-} from "../systems/sortition";
-
+} = sortition
 test("Sortition - Definition", () => {
   const definition = createBasicDefinition(123210, ["a", "a", "b", "c"]);
   expect(definition.options.length).toBe(3);

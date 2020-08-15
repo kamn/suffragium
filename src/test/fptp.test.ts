@@ -1,10 +1,11 @@
-import {
+import { addBallotIgnoreError } from "./helpers";
+import { fptp } from "../index";
+const {
   createDefinition,
   startElection,
   castBallot,
   getElectionResults,
-} from "../systems/fptp";
-import { addBallotIgnoreError } from "./helpers";
+} = fptp
 
 test("First Past The Post - Definition", () => {
   const definition = createDefinition(["a", "a", "b", "c"]);

@@ -1,11 +1,13 @@
 import { repeatBallot } from "./helpers";
-import {
+import { copeland } from "../index";
+
+const {
   createDefinition,
   startElection,
   castBallot,
   getElectionResults,
   getAllOptionPairs,
-} from "../systems/copeland";
+} = copeland
 
 test("Copeland - GetAllPairs", () => {
   const pairs = getAllOptionPairs(["a", "b", "c"]);

@@ -1,10 +1,12 @@
 import { repeatBallot } from "./helpers";
-import {
+import { approval } from "../index";
+
+const {
   createDefinition,
   startElection,
   castBallot,
   getElectionResults,
-} from "../systems/approval";
+} = approval
 
 test("Approval - Definition", () => {
   const definition = createDefinition(["a", "a", "b", "b", "c"]);

@@ -1,10 +1,13 @@
 import { repeatBallot } from "./helpers";
-import {
+import { borda } from "../index";
+
+const {
   createDefinition,
   startElection,
   castBallot,
   getElectionResults,
-} from "../systems/borda";
+} = borda
+
 
 test("Borda - Definition", () => {
   const definition = createDefinition(["a", "a", "b", "b", "c"]);
