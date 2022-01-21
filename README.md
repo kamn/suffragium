@@ -29,7 +29,7 @@ For the fun of it but there are some additional advantages over similar librarie
 * Property Testing - Voting systems have multiple properties(Majority, Condorcet, Cloneproof, Monotone, etc) and I think these can be tested through property based tests. Might not be useful if someone is looking for mathematical verification. 
 
 ## License
-Copyright 2020 kamn
+Copyright 2022 kamn
 
 Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby granted, provided that the above copyright notice and this permission notice appear in all copies.
 

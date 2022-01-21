@@ -6,4 +6,6 @@ import * as borda from "./systems/borda";
 import * as approval from "./systems/approval";
 import * as irv from "./systems/irv";
 import * as randomBallot from "./systems/randomBallot";
-export { fptp, sortition, bucklin, copeland, borda, approval, irv, randomBallot };
+import * as stars from "./systems/stars";
+
+export { fptp, sortition, bucklin, copeland, borda, approval, irv, randomBallot, stars };
