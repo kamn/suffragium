@@ -1,48 +1,48 @@
 import { Result, ElectionResult } from "../generic";
 import { dedup } from "./helpers";
 
-// https://en.wikipedia.org/wiki/Bucklin_voting
+// https://en.wikipedia.org/wiki/Kemeny%E2%80%93Young_method
 
-export type BordaElectionDefinition = {
+export type KemenyElectionDefinition = {
   options: Array<string>;
 };
 
-export type BordaBallot = {
+export type KemenyBallot = {
   selection: Array<string>;
 };
 
-export type BordaElection = {
-  definition: BordaElectionDefinition;
-  ballots: Array<BordaBallot>;
+export type KemenyElection = {
+  definition: KemenyElectionDefinition;
+  ballots: Array<KemenyBallot>;
 };
 
 export const createDefinition = (
   options: Array<string>
-): BordaElectionDefinition => {
+): KemenyElectionDefinition => {
   return {
     options: dedup(options),
   };
 };
 
 export const startElection = (
-  definition: BordaElectionDefinition
-): BordaElection => {
+  definition: KemenyElectionDefinition
+): KemenyElection => {
   return {
     definition,
     ballots: [],
   };
 };
 
-const isValidBallot = (election: BordaElection, ballot: BordaBallot) => {
+const isValidBallot = (election: KemenyElection, ballot: KemenyBallot) => {
   return ballot.selection.reduce((r, x) => {
     return r && election.definition.options.includes(x);
   }, true);
 };
 
 export const castBallot = (
-  election: BordaElection,
-  ballot: BordaBallot
-): Result<BordaElection> => {
+  election: KemenyElection,
+  ballot: KemenyBallot
+): Result<KemenyElection> => {
   if (isValidBallot(election, ballot)) {
     return {
       result: "success",
@@ -55,7 +55,9 @@ export const castBallot = (
   }
 };
 
-const getSummarizedDefault = (election: BordaElection) => {
+type PairwiseSummary = any
+
+const getSummarizedDefault = (election: KemenyElection) : PairwiseSummary => {
   return election.definition.options.reduce((r, option) => {
     r[option] = 0;
     return r;
@@ -81,14 +83,9 @@ const getMajority = (results: Record<string, number>, totalBallots: number) => {
     .map((x) => x[0]);
 };
 
-const hasMajority = (results: Record<string, number>, totalBallots: number) => {
-  const majorityWinner = getMajority(results, totalBallots);
-  return majorityWinner ? true : false;
-};
-
 
 export const getElectionResults = (
-  election: BordaElection
+  election: KemenyElection
 ): ElectionResult => {
   const beginningResults = getSummarizedDefault(election);
   const totalOptions = election.definition.options.length;
