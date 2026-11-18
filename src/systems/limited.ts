@@ -1,5 +1,5 @@
 // https://en.wikipedia.org/wiki/Limited_voting
-// Also covers SNTV (votesPerBallot = 1) and block voting (votesPerBallot = seats).
+// Also covers SNTV (votesPerBallot = 1), block voting (votesPerBallot = seats) and block approval (unlimited).
 import { MultiWinnerResult } from "../generic";
 import { dedup, startElection, castWith, validRanked, zeroes, topK, SeatsDefinition, Election, RankedBallot } from "./helpers";
 
@@ -16,6 +16,9 @@ export const createDefinition = (options: Array<string>, seats: number, votesPer
 export const createSntvDefinition = (options: Array<string>, seats: number) => createDefinition(options, seats, 1);
 // https://en.wikipedia.org/wiki/Plurality_block_voting
 export const createBlockDefinition = (options: Array<string>, seats: number) => createDefinition(options, seats, seats);
+// https://en.wikipedia.org/wiki/Multiwinner_approval_voting (approve as many as you like, top k win)
+export const createBlockApprovalDefinition = (options: Array<string>, seats: number) =>
+  createDefinition(options, seats, dedup(options).length);
 
 // Each ballot lists up to votesPerBallot distinct options (order doesn't matter).
 export const castBallot = castWith(

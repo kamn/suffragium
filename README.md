@@ -4,17 +4,23 @@ A Basic Vote Counting Library
 
 Supports the following vote counting systems
 
-**Single winner – plurality family:** First Past The Post (`fptp`), Anti-plurality (`antiPlurality`), Approval (`approval`)
+**Single winner – plurality family:** First Past The Post (`fptp`), Anti-plurality (`antiPlurality`), Approval (`approval`), Positional / custom weights (`positional`)
 
-**Single winner – ranked ballots:** Instant Runoff (`irv`), Contingent / two-round (`contingent`), Bucklin (`bucklin`), Coombs (`coombs`), Borda (`borda`), Dowdall (`dowdall`), Baldwin (`baldwin`), Nanson (`nanson`)
+**Single winner – ranked ballots:** Instant Runoff (`irv`), Contingent / two-round (`contingent`), Supplementary vote (`supplementary`), Bucklin (`bucklin`), Coombs (`coombs`), Borda (`borda`), Dowdall (`dowdall`), Baldwin (`baldwin`), Nanson (`nanson`)
 
-**Single winner – Condorcet:** Copeland (`copeland`), Kemeny–Young (`kemeny`), Minimax (`minimax`), Ranked Pairs (`rankedPairs`), Schulze (`schulze`), Black (`black`), Smith set (`smith`), Schwartz set (`schwartz`)
+**Single winner – Condorcet:** Copeland (`copeland`), Kemeny–Young (`kemeny`), Minimax (`minimax`), Ranked Pairs (`rankedPairs`), Schulze (`schulze`), Black (`black`), Dodgson (`dodgson`), Tideman alternative (`tideman`), Condorcet–IRV (`condorcetIrv`), Dasgupta–Maskin (`dasguptaMaskin`), Smith set (`smith`), Schwartz set (`schwartz`)
 
-**Single winner – scores and grades:** Score / Range (`score`), STAR (`stars`), Majority Judgment (`majorityJudgment`), 3-2-1 (`threeTwoOne`)
+**Single winner – scores and grades:** Score / Range (`score`), STAR (`stars`), Majority Judgment (`majorityJudgment`), Graduated Majority Judgment (`graduatedMajorityJudgment`), 3-2-1 (`threeTwoOne`), Combined approval (`combinedApproval`), Quadratic (`quadratic`)
 
-**Multi-winner:** Single Transferable Vote (`stv`), D'Hondt (`dhondt`), Sainte-Laguë (`sainteLague`), Limited / SNTV / Block (`limited`), Cumulative (`cumulative`), Proportional Approval (`pav`), Sequential PAV (`spav`), Phragmén (`phragmen`), Reweighted Range (`rrv`)
+**Multi-winner – candidates:** Single Transferable Vote (`stv`), CPO-STV (`cpoStv`), Schulze STV (`schulzeStv`), Quota Borda (`quotaBorda`), k-Borda (`kBorda`), Expanding Approvals (`expandingApprovals`), Limited / SNTV / Block / Block approval (`limited`), Cumulative (`cumulative`), Satisfaction approval (`satisfactionApproval`), Thiele methods (`thiele`), Proportional Approval (`pav`), Sequential PAV (`spav`), Phragmén (`phragmen`), Method of Equal Shares (`equalShares`), Minimax approval (`minimaxApproval`), Reweighted Range (`rrv`)
 
-**Random:** Sortition (`sortition`), Random Ballot (`randomBallot`)
+**Multi-winner – party list:** D'Hondt (`dhondt`), Sainte-Laguë (`sainteLague`), Huntington–Hill (`huntingtonHill`), Largest remainder – Hare / Droop / Hagenbach-Bischoff / Imperiali (`largestRemainder`), Biproportional (`biproportional`)
+
+**Mixed:** Parallel voting and Mixed-member proportional / AMS (`mixed`)
+
+**Probabilistic:** Sortition (`sortition`), Random Ballot (`randomBallot`), Multiple random ballots (`multipleRandomBallots`), Maximal lotteries (`maximalLotteries`), Fractional approval (`fractionalApproval`)
+
+**Delegation:** Liquid democracy (`liquidDemocracy`)
 
 ## Examples
 

@@ -1,4 +1,4 @@
-import { ElectionResult } from "../generic";
+import { ElectionResult, MultiWinnerResult } from "../generic";
 import { Random, MersenneTwister19937 } from "random-js";
 import { dedup } from "./helpers";
 
@@ -41,4 +41,11 @@ export const getElectionResults = (
     result: "winner",
     winner: option,
   };
+};
+
+// Multi-winner sortition: draw `seats` options at random.
+export const getCommitteeResults = (election: FirstPastThePostElection, seats: number): MultiWinnerResult => {
+  const random = new Random(MersenneTwister19937.seed(election.definition.seed));
+  const { options } = election.definition;
+  return { result: "winners", winners: random.sample(options, Math.min(seats, options.length)) };
 };

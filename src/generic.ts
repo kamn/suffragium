@@ -38,3 +38,22 @@ export type SeatResult = {
   result: "seats";
   seats: Record<string, number>;
 };
+
+// Probabilistic systems: chance each option is chosen (sums to 1).
+export type LotteryResult = {
+  result: "lottery";
+  probabilities: Record<string, number>;
+};
+
+// Biproportional apportionment: seats per region per party.
+export type RegionSeatResult = {
+  result: "seats-by-region";
+  seats: Record<string, Record<string, number>>;
+};
+
+// Mixed systems: who won each district plus total seats per party.
+export type MixedResult = {
+  result: "mixed";
+  districtWinners: Record<string, string>;
+  seats: Record<string, number>;
+};

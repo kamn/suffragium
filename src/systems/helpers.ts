@@ -119,9 +119,29 @@ export const allocateSeats = (
 ): Record<string, number> => {
   const won = zeroes(Object.keys(votes));
   for (let i = 0; i < seats; i++) {
-    const [next] = topK(Object.fromEntries(Object.keys(votes).map((p) => [p, votes[p] / divisor(won[p])])), 1);
+    const quotient = (p: string) => (votes[p] === 0 ? 0 : votes[p] / divisor(won[p])); // divisor 0 → Infinity
+    const [next] = topK(Object.fromEntries(Object.keys(votes).map((p) => [p, quotient(p)])), 1);
     if (next === undefined) break;
     won[next]++;
   }
   return won;
+};
+
+export const combinations = <T>(xs: Array<T>, k: number): Array<Array<T>> =>
+  k === 0 ? [[]] : xs.flatMap((x, i) => combinations(xs.slice(i + 1), k - 1).map((c) => [x, ...c]));
+
+// Smallest set whose members all beat-or-tie everyone outside it.
+export const smithSet = (options: Array<string>, d: Pairwise) => {
+  const reach = closure(options, (a, b) => d[a][b] >= d[b][a]);
+  return options.filter((a) => options.every((b) => reach[a][b]));
+};
+
+// Schulze widest-path winners. strength(a, b) is the link a→b (0 = no link).
+export const schulzeWinners = (items: Array<string>, strength: (a: string, b: string) => number) => {
+  const p = Object.fromEntries(items.map((a) => [a, Object.fromEntries(items.map((b) => [b, a === b ? 0 : strength(a, b)]))]));
+  for (const i of items)
+    for (const j of items)
+      for (const k of items)
+        if (i !== j && j !== k && i !== k) p[j][k] = Math.max(p[j][k], Math.min(p[j][i], p[i][k]));
+  return items.filter((a) => items.every((b) => p[a][b] >= p[b][a]));
 };
