@@ -103,7 +103,7 @@ const getLowestSelections = (results: Record<string, number>) => {
   return lowestSelections
 }
 
-const getElectionResultsRecursive = (election: IrvElection, excluded: Array<string>) => {
+const getElectionResultsRecursive = (election: IrvElection, excluded: Array<string>): ElectionResult => {
 
   if (excluded.length === election.definition.options.length) {
     return {
