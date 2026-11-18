@@ -1,3 +1,4 @@
+import { test, expect } from "bun:test";
 import { repeatBallot } from "./helpers";
 import { copeland } from "../index";
 
