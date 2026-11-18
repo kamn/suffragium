@@ -26,3 +26,15 @@ export type ElectionResult =
   | ElectionNoWinnerResult
   | ElectionWinnerResult
   | ElectionTieResult;
+
+// Multi-winner systems: elected candidates in the order they were elected.
+export type MultiWinnerResult = {
+  result: "winners";
+  winners: Array<string>;
+};
+
+// Party-list systems: seats won per party.
+export type SeatResult = {
+  result: "seats";
+  seats: Record<string, number>;
+};

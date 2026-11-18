@@ -1,5 +1,5 @@
 import { Result, ElectionResult } from "../generic";
-import { dedup } from "./helpers";
+import { dedup, zeroes, scoreOf, best, toResult } from "./helpers";
 
 // https://en.wikipedia.org/wiki/STAR_voting
 
@@ -60,64 +60,24 @@ export const castBallot = (
   }
 };
 
-const getSummarizedDefault = (election: StarsElection) => {
-  return election.definition.options.reduce((r, option) => {
-    r[option] = 0;
-    return r;
-  }, {});
-};
-
-const getMajority = (results: Record<string, number>, totalBallots: number) => {
-  const sorted = Object.entries(results).sort((a, b) => {
-    return b[1] - a[1];
-  });
-  return sorted
-    .reduce((r, x) => {
-      if (r.length === 0) {
-        return r.concat([x]);
-      } else {
-        const first = r[0];
-        if (x[1] === first[1]) {
-          return r.concat([x]);
-        }
-        return r;
-      }
-    }, [])
-    .map((x) => x[0]);
-};
-
-const hasMajority = (results: Record<string, number>, totalBallots: number) => {
-  const majorityWinner = getMajority(results, totalBallots);
-  return majorityWinner ? true : false;
-};
-
-const selectFrontRunners = () => {
-  
-  //TODO: What is there are more than two frontrunners(a 3 way tie or a tie for second)
-  return []
-}
-export const getElectionResults = (
-  election: StarsElection
-): ElectionResult => {
-  const beginningResults = getSummarizedDefault(election);
-  const totalOptions = election.definition.options.length;
-  const results = election.ballots.reduce((results, ballot) => {
-    ballot.selection.map((vote, index) => {
-      const selection = vote.selection
-      results[selection] += vote.score
-    })
-    return results
-  }, beginningResults)
-  const winners = getMajority(results, election.ballots.length);
-  if(winners.length === 1) {
-    return {
-      result: "winner",
-      winner: winners[0],
-    };
-  } else {
-    return {
-      result: "tie",
-      ties: winners,
-    };
+// Scoring round picks the two highest totals; the automatic runoff goes to whichever
+// finalist more voters scored higher. A runoff tie goes to the higher total.
+export const getElectionResults = (election: StarsElection): ElectionResult => {
+  const { options } = election.definition;
+  const totals = zeroes(options);
+  for (const b of election.ballots) for (const v of b.selection) totals[v.selection] += v.score;
+  if (options.length < 2) return toResult(options);
+  const ranked = [...options].sort((a, b) => totals[b] - totals[a]);
+  const cut = totals[ranked[1]];
+  const finalists = options.filter((o) => totals[o] >= cut);
+  // ponytail: a 3+-way tie for the finals is reported as a tie, no official tiebreaker rounds
+  if (finalists.length > 2) return toResult(finalists);
+  const [a, b] = finalists;
+  const runoff = { [a]: 0, [b]: 0 };
+  for (const ballot of election.ballots) {
+    const diff = scoreOf(ballot, a) - scoreOf(ballot, b);
+    if (diff > 0) runoff[a]++;
+    if (diff < 0) runoff[b]++;
   }
+  return runoff[a] === runoff[b] ? best({ [a]: totals[a], [b]: totals[b] }) : best(runoff);
 };

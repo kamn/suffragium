@@ -4,10 +4,17 @@ A Basic Vote Counting Library
 
 Supports the following vote counting systems
 
-* First Past The Post
-* Sortition
-* Bucklin
-* Copeland
+**Single winner – plurality family:** First Past The Post (`fptp`), Anti-plurality (`antiPlurality`), Approval (`approval`)
+
+**Single winner – ranked ballots:** Instant Runoff (`irv`), Contingent / two-round (`contingent`), Bucklin (`bucklin`), Coombs (`coombs`), Borda (`borda`), Dowdall (`dowdall`), Baldwin (`baldwin`), Nanson (`nanson`)
+
+**Single winner – Condorcet:** Copeland (`copeland`), Kemeny–Young (`kemeny`), Minimax (`minimax`), Ranked Pairs (`rankedPairs`), Schulze (`schulze`), Black (`black`), Smith set (`smith`), Schwartz set (`schwartz`)
+
+**Single winner – scores and grades:** Score / Range (`score`), STAR (`stars`), Majority Judgment (`majorityJudgment`), 3-2-1 (`threeTwoOne`)
+
+**Multi-winner:** Single Transferable Vote (`stv`), D'Hondt (`dhondt`), Sainte-Laguë (`sainteLague`), Limited / SNTV / Block (`limited`), Cumulative (`cumulative`), Proportional Approval (`pav`), Sequential PAV (`spav`), Phragmén (`phragmen`), Reweighted Range (`rrv`)
+
+**Random:** Sortition (`sortition`), Random Ballot (`randomBallot`)
 
 ## Examples
 
